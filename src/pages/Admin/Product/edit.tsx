@@ -58,7 +58,6 @@ const EditProduct = () => {
 
 
 			if (Number(values.saleOffPrice) > Number(values.originalPrice)) {
-				// values.saleOffPrice = "Mã giảm giá quá lớn"
 				message.error("Giá giảm không được > giá cũ")
 				
 
@@ -66,7 +65,7 @@ const EditProduct = () => {
 			} else if (!image) {
 				message.error("Bạn chưa chọn ảnh")
 			} else{
-				const data = await editProduct({ ...values, image, id })
+				await editProduct({ ...values, image, id })
 				// console.log(data);
 				message.success("Cập nhật thành công");
         navigate("/admin")

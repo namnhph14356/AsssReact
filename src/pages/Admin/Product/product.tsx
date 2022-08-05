@@ -5,14 +5,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
 const { Paragraph } = Typography
 import type { ColumnsType } from 'antd/es/table';
-import { getAll, removeProduct } from "../../../api/product";
+import { getAll, Money, removeProduct } from "../../../api/product";
 import { useQuery } from 'react-query'
 import { listCate } from "../../../api/category";
 
 
 
 interface DataType {
-    id?: number;
     name: string;
     saleOffPrice: number;
     feature: string;
@@ -32,6 +31,7 @@ const ProductAdminPage = () => {
         setDataTable(data.data)
     }
 
+
     // fetchData()
     useEffect(() => {
         const listcategory = async () => {
@@ -42,9 +42,6 @@ const ProductAdminPage = () => {
         }
         listcategory();
     }, [])
-    const handleChange = (value: string) => {
-        console.log(`selected ${value}`);
-    };
 
     const { isLoading, data, error } = useQuery(['Products'], getAll)
     console.log(data);
@@ -57,8 +54,9 @@ const ProductAdminPage = () => {
             removeProduct(id);
             setConfirmLoading(false);
             message.success({ content: 'Xóa Thành Công!', duration: 2 });
-            setDataTable(dataTable?.filter(item => item.id != id))
         }, 500)
+        setDataTable(dataTable?.filter(item => item.id != id))
+
     }
     const columns: ColumnsType<DataType> = [
         {
@@ -99,6 +97,7 @@ const ProductAdminPage = () => {
             title: 'Giá khuyến mãi',
             dataIndex: 'saleOffPrice',
             key: 'saleOffPrice',
+            render: text => <p>{Money(text)}</p>
         },
         {
             title: 'Mô tả',
@@ -148,7 +147,7 @@ const ProductAdminPage = () => {
                     <Button type="dashed" shape="circle" icon={<PlusOutlined />} />
                 </Link>
             </Breadcrumb>
-            <Cate>
+            {/* <Cate>
                 <Typography.Title level={4} style={{ margin: 0 }}>
                     Bộ lọc:
                 </Typography.Title>
@@ -162,7 +161,7 @@ const ProductAdminPage = () => {
                         <Option value="tablet">Máy tính bảng</Option>
                     </Select>
                 </Sect>
-            </Cate>
+            </Cate> */}
             <Table loading={isLoading} columns={columns} dataSource={data?.data} />
         </>
     )

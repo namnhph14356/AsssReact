@@ -33,19 +33,11 @@ const AddProductPage = () => {
 		console.log(image);
 
 		try {
-
-
 			if (Number(values.saleOffPrice) > Number(values.originalPrice)) {
-				// values.saleOffPrice = "Mã giảm giá quá lớn"
 				message.error("Giá giảm không được > giá cũ")
-				
-
-
-			} else if (!image) {
-				message.error("Bạn chưa chọn ảnh")
-			} else{
-				const data = await createProduct({ ...values, image })
-				// console.log(data);
+			}
+			 else{
+				 await createProduct({ ...values, image })
 
 				message.success("Tạo mới thành công");
 				navigate("/admin")

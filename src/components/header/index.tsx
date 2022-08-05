@@ -30,7 +30,9 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
     width: 1200px;
-    margin: 0 auto;
-    display: flex;
+    margin: auto;
+    display:grid ;
+    grid-template-columns: 2fr 4fr 5fr;
+    gap:30px;
     align-items: center;
 `

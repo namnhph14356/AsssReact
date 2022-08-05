@@ -5,12 +5,15 @@ import { Route, Routes } from 'react-router-dom'
 import SigninPage from './pages/Auth/signin'
 import UserLayout from './components/layout/user'
 import HomePage from './pages/Home/home'
-import DetailPage from './pages/Home/Detail'
 import AdminLayout from './components/layout/admin'
 import ProductAdminPage from './pages/Admin/Product/product'
 import AddProductPage from './pages/Admin/Product/add'
 import EditProduct from './pages/Admin/Product/edit'
 import ListCategory from './pages/Admin/Categories/list'
+import DetailProduct from './pages/Home/Detail'
+import { CartProvider } from 'react-use-cart'
+import CartPage from './pages/Home/Cart'
+
 
 function App() {
   return (
@@ -19,9 +22,11 @@ function App() {
         {/* Auth */}
         <Route path='/signin' element={<SigninPage/>}/>
         {/* User layout */}
-        <Route path='/' element={<UserLayout/>}>
+        <Route path='/' element={<CartProvider><UserLayout/></CartProvider>}>
           <Route index element={<HomePage/>}/>
-          <Route path='detail' element={<DetailPage/>}/>
+          <Route path='/detail/:id' element={<DetailProduct />} />
+          <Route path='/cart' element={<CartPage />} />
+
         </Route>
         {/* Admin layout */}
         <Route path='admin' element={<AdminLayout/>}>

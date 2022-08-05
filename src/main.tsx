@@ -5,14 +5,18 @@ import App from './App'
 import './index.css'
 import 'antd/dist/antd.css';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import { Provider } from 'react-redux'
+import { store } from './redux/store'
 const queryClient = new QueryClient()
 
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <BrowserRouter>
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+      </Provider>
   </BrowserRouter>
 )
