@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Typography, Button, Table, Select, Space, Popconfirm, message } from 'antd';
+import { Typography, Button, Table, Select, Space, Popconfirm, message, Form } from 'antd';
 import { Link, useNavigate } from 'react-router-dom'
 import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
 const { Paragraph } = Typography
@@ -25,12 +25,7 @@ const ProductAdminPage = () => {
     const [confirmLoading, setConfirmLoading] = useState(false);
     // const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate();
-
-    const fetchData = async () => {
-        const data = await getAll()
-        setDataTable(data.data)
-    }
-
+    const [form] = Form.useForm();
 
     // fetchData()
     useEffect(() => {
@@ -41,6 +36,13 @@ const ProductAdminPage = () => {
             setCategory(data)
         }
         listcategory();
+        const getproduct = async () => {
+            const { data } = await getAll();
+            console.log(data);
+            
+            setDataTable(data)
+        }
+        getproduct()
     }, [])
 
     const { isLoading, data, error } = useQuery(['Products'], getAll)
@@ -54,8 +56,8 @@ const ProductAdminPage = () => {
             removeProduct(id);
             setConfirmLoading(false);
             message.success({ content: 'Xóa Thành Công!', duration: 2 });
+            setDataTable(dataTable?.filter(item => item.id != id))
         }, 500)
-        setDataTable(dataTable?.filter(item => item.id != id))
 
     }
     const columns: ColumnsType<DataType> = [
@@ -85,10 +87,10 @@ const ProductAdminPage = () => {
             title: 'Loại hàng',
             dataIndex: 'categories',
             key: 'categories',
-            filters: category.map((item: any) => { return { text: item.name, value: item.name } }),
+            filters: category.map((item: any) => { return { text: item.name, value: item.id } }),
             onFilter: (value, record: any) => {
                 console.log(record.categories);
-                console.log(value);
+                console.log(value); 
 
                 return record.categories == value
             }
@@ -100,11 +102,10 @@ const ProductAdminPage = () => {
             render: text => <p>{Money(text)}</p>
         },
         {
-            title: 'Mô tả',
-            dataIndex: 'description',
-            key: 'description',
-            render: text => <a><p style={{maxWidth: '15ch',display: 'inline-block',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{text}</p></a>,
-
+            title: 'Giá gốc',
+            dataIndex: 'originalPrice',
+            key: 'originalPrice',
+            render: text => <p>{Money(text)}</p>
         },
         {
             title: "Hành Động", key: "action", render: (text, record: any) => (
@@ -162,7 +163,7 @@ const ProductAdminPage = () => {
                     </Select>
                 </Sect>
             </Cate> */}
-            <Table loading={isLoading} columns={columns} dataSource={data?.data} />
+            <Table loading={isLoading} columns={columns} dataSource={dataTable} />
         </>
     )
 }

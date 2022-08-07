@@ -4,6 +4,7 @@ import { AutoComplete as AutuCompleteAnt, Input } from 'antd';
 import styled from 'styled-components';
 import { getAll } from '../../api/product';
 
+
 const options = [
     { value: "Iphone" },
     { value: "Oppo" },
@@ -15,7 +16,7 @@ interface DataType {
     saleOffPrice: number;
     feature: string;
     description: string;
-    image:string
+    image: string
 }
 
 
@@ -23,26 +24,15 @@ const AutoComplete = () => {
     const [product, setProduct] = useState<DataType[]>([])
     const [list, setList] = useState<DataType[]>([])
 
-    useEffect(()=>{
+    useEffect(() => {
         const getProduct = async () => {
             const data = await getAll()
             setProduct(data.data)
         }
         getProduct()
-    },[])
+    }, [])
     console.log(product);
-    const { isLoading, data, error } = useQuery(['Products'], getAll)
 
-    const searchProduct = (text:any) => {
-        let matches = product.filter((item) => {
-            const regex = new RegExp(`${text}`, "gi");
-            return item.name.match(regex)
-        });
-        setList(matches)
-    }
-    const haha = product.map((item) => {
-        return item.name
-    })
     return (
         <div>
 

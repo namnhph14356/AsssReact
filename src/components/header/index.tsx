@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from 'styled-components'
 import LogoImage from '../../assets/images/logo.png'
 import Listnav from "../Input";
@@ -7,7 +8,7 @@ const Header = () => {
     return (
         <Wrapper>
             <Container>
-                <Logo src={LogoImage} />
+                <Link to='/' ><Logo src={LogoImage} /></Link>
                 <AutoComplete/>
                 <Listnav />
             </Container>

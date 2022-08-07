@@ -25,6 +25,18 @@ const CartPage = () => {
 
     }
   }
+  const deleteCart = (item: any) => {
+    Modal.confirm({
+        title: "Bạn có chắc muốn xóa sản phẩm này không ?",
+        onOk:() => {
+            removeItem(item)
+        },
+        onCancel: () => {
+            return false
+        }
+        
+    })
+  }
   return (
     <div>
       <Cart >
@@ -56,11 +68,10 @@ const CartPage = () => {
                 </div>
               </SoLuong>
               <KhuyenMai>
-                <p>- Chương trình khuyến mại: </p>
-                <p>{item.description}</p>
+                <p>{item.feature}</p>
               </KhuyenMai>
               <h3>Tổng tiền sản phẩm: <span style={{color: 'red'}}>{currency(item.itemTotal)}</span></h3>
-              <Delete ><button style={{border: 'none', backgroundColor: 'white', cursor:'pointer'}} onClick={() => removeItem(item.id)}><CloseOutlined /></button></Delete>
+              <Delete ><button style={{border: 'none', backgroundColor: 'white', cursor:'pointer'}} onClick={() => deleteCart(item.id)}><CloseOutlined /></button></Delete>
             </div>
 
           </Row>

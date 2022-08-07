@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import UploadImage from '../../../components/product/UploadImage';
 import { createProduct } from '../../../api/product';
 import { listCate } from '../../../api/category';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 
 const { TextArea } = Input
 const { Option } = Select;
@@ -20,14 +23,14 @@ const AddProductPage = () => {
 	}
 
 	useEffect(() => {
-        const listcategory = async () => {
-            const { data } = await listCate();
-            console.log(data);
+		const listcategory = async () => {
+			const { data } = await listCate();
+			console.log(data);
 
-            setCategory(data)
-        }
-        listcategory();
-    }, [])
+			setCategory(data)
+		}
+		listcategory();
+	}, [])
 	const onFinish = async (values: any) => {
 		console.log('Success:', values);
 		console.log(image);
@@ -36,8 +39,8 @@ const AddProductPage = () => {
 			if (Number(values.saleOffPrice) > Number(values.originalPrice)) {
 				message.error("Giá giảm không được > giá cũ")
 			}
-			 else{
-				 await createProduct({ ...values, image })
+			else {
+				await createProduct({ ...values, image })
 
 				message.success("Tạo mới thành công");
 				navigate("/admin")
@@ -115,8 +118,8 @@ const AddProductPage = () => {
 									rules={[{ required: true }]}
 								>
 									<Select style={{ width: '100%' }} size="large">
-										{category.map((item:any) => (
-											<Option value={item.name}>{item.name}</Option>
+										{category.map((item: any) => (
+											<Option value={item.id}>{item.name}</Option>
 										))}
 									</Select>
 								</Form.Item>
@@ -131,13 +134,21 @@ const AddProductPage = () => {
 						>
 							<TextArea name="feature" />
 						</Form.Item>
-						<Form.Item
+						{/* <Form.Item
 							name="description"
 							labelCol={{ span: 24 }}
 							label="Mô tả sản phẩm"
 							rules={[{ required: true, message: 'Mô tả sản phẩm' }]}
 						>
 							<TextArea name="description" />
+						</Form.Item> */}
+						<Form.Item
+							name="description"
+							labelCol={{ span: 24 }}
+							label="Mô tả sản phẩm"
+							rules={[{ required: true, message: 'Mô tả sản phẩm' }]}
+						>
+							<ReactQuill theme="snow" style={{backgroundColor: 'white'}} />
 						</Form.Item>
 
 						<Form.Item>

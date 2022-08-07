@@ -6,6 +6,9 @@ import { editProduct, getProductId } from '../../../api/product';
 import UploadImage from '../../../components/product/UploadImage';
 import { useQuery } from 'react-query';
 import { listCate } from '../../../api/category';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 
 
 
@@ -98,7 +101,7 @@ const EditProduct = () => {
 				<Col span={14}>
 					<Typography.Title level={5}>Thông tin sản phẩm</Typography.Title>
 					<Form
-            form={form}
+            			form={form}
 						// name="product"
 						initialValues={{}}
 						onFinish={onFinish}
@@ -147,7 +150,7 @@ const EditProduct = () => {
 								>
 									<Select style={{ width: '100%' }} size="large">
 										{category.map((item:any) => (
-											<Option value={item.name}>{item.name}</Option>
+											<Option value={item.id}>{item.name}</Option>
 										))}
 									</Select>
 								</Form.Item>
@@ -162,13 +165,21 @@ const EditProduct = () => {
 						>
 							<TextArea name="feature" />
 						</Form.Item>
-						<Form.Item
+						{/* <Form.Item
 							name="description"
 							labelCol={{ span: 24 }}
 							label="Mô tả sản phẩm"
 							rules={[{ required: true, message: 'Mô tả sản phẩm' }]}
 						>
 							<TextArea name="description" />
+						</Form.Item> */}
+						<Form.Item
+							name="description"
+							labelCol={{ span: 24 }}
+							label="Mô tả sản phẩm"
+							rules={[{ required: true, message: 'Mô tả sản phẩm' }]}
+						>
+							<ReactQuill theme="snow" style={{backgroundColor: 'white'}} />
 						</Form.Item>
 
 						<Form.Item>

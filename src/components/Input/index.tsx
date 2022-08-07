@@ -3,9 +3,14 @@ import { Breadcrumb, Col, Layout, Menu, Row } from 'antd';
 const { Header, Content, Footer } = Layout;
 import { HomeOutlined, CarOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import styled from 'styled-components'
+import { Link } from 'react-router-dom';
+import { useCart } from 'react-use-cart'
+
 
 
 export const Listnav = () => {
+  const { totalUniqueItems } = useCart();
+
   return (
     <div style={{ color: "white", margin: "auto 0" }}>
       <Row >
@@ -46,11 +51,14 @@ export const Listnav = () => {
         </Col>
         <Col span={6}>
           <Row style={{ lineHeight: "1.5", }}>
-            <Col span={8} style={{ margin: "auto 0", fontSize: "30px" }}><a href=''><svg width="21" height="25" viewBox="0 0 21 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <Col span={8} style={{ margin: "auto 0", fontSize: "30px" }}><Link to='cart'><svg width="21" height="25" viewBox="0 0 21 25" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M7.30994 7.51354V3.8138C7.30899 3.39575 7.39087 2.98165 7.55085 2.59542C7.71082 2.20919 7.94573 1.85847 8.242 1.56353C8.53827 1.26858 8.89003 1.03525 9.27698 0.877009C9.66392 0.718767 10.0784 0.638749 10.4964 0.641575V0.641575C11.3378 0.641575 12.1446 0.975791 12.7395 1.5707C13.3344 2.16561 13.6687 2.97247 13.6687 3.8138V7.51354" stroke="white" stroke-width="1.28315" stroke-linecap="round" stroke-linejoin="round" />
               <path d="M16.9122 24.3584H4.08075C3.63137 24.3578 3.18696 24.2644 2.77534 24.084C2.36373 23.9037 1.99377 23.6404 1.68863 23.3105C1.3835 22.9806 1.14975 22.5912 1.00202 22.1668C0.854288 21.7424 0.795763 21.2921 0.830104 20.844L1.96355 6.25891C1.98506 6.00175 2.10263 5.76212 2.29286 5.58775C2.48309 5.41337 2.73201 5.31704 2.99007 5.31794H18.0029C18.2602 5.31718 18.5083 5.41375 18.6974 5.58827C18.8864 5.7628 19.0025 6.00237 19.0223 6.25891L20.1415 20.844C20.1768 21.2905 20.1196 21.7395 19.9736 22.1629C19.8275 22.5864 19.5957 22.9751 19.2927 23.3049C18.9896 23.6347 18.6218 23.8985 18.2123 24.0798C17.8027 24.261 17.3601 24.3559 16.9122 24.3584V24.3584Z" stroke="white" stroke-width="1.28315" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-            </a> </Col>
+            <Span>{totalUniqueItems}</Span>
+
+            </Link>
+            </Col>
             <Col span={14}>Giỏ  <br /> hàng</Col>
           </Row>
         </Col>
@@ -58,5 +66,12 @@ export const Listnav = () => {
     </div>
   )
 }
+const Span = styled.div`
+  font-size: 15px;
+  position: absolute;
+  top: 13px;
+  left:7px;
+  color: white;
+`
 
 export default Listnav

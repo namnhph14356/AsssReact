@@ -13,6 +13,7 @@ import ListCategory from './pages/Admin/Categories/list'
 import DetailProduct from './pages/Home/Detail'
 import { CartProvider } from 'react-use-cart'
 import CartPage from './pages/Home/Cart'
+import EditCategories from './pages/Admin/Categories/edit'
 
 
 function App() {
@@ -35,6 +36,8 @@ function App() {
           <Route path='product/add' element={<AddProductPage/>}/>
           <Route path='product/edit/:id' element={<EditProduct/>}/>
           <Route path='categories' element={<ListCategory />}/>
+          <Route path='categories/edit/:id' element={<EditCategories/>}/>
+
         </Route>
       </Routes>
     </div>

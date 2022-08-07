@@ -6,77 +6,86 @@ import { useCart } from 'react-use-cart'
 import styled from 'styled-components'
 import { getProductId } from '../../../api/product'
 import { currency } from '../../../helpers/money'
+import { ShoppingCartOutlined } from '@ant-design/icons';
+
 const DetailProduct = () => {
-    const [productId, setProductId] = useState<any>({})
-    const {id} = useParams();
-    const dispatch = useDispatch();
+  const [productId, setProductId] = useState<any>({})
+  const { id } = useParams();
+  const dispatch = useDispatch();
 
-    const {addItem} = useCart();
-    
-    // console.log(abc);
-    
-    useEffect(() => {
-        const getProductById = async (id:any) => {
-            const {data} = await getProductId(id);
-            setProductId(data)
-        }
-        getProductById(id);
-    },[])
+  const { addItem } = useCart();
 
-    const addToCart = (product:any) => {
-        console.log(product);
-       const add =  addItem(
-            {
-                id: productId.id,
-                name: productId.name, 
-                price: productId.saleOffPrice,
-                image: productId.image, 
-                originalPrice: productId.originalPrice,
-                feature: productId.feature,
-                description: productId.description,
-                categories: productId.categories
-            }
-            )
-           
-            message.success("Đã thêm 1 sản phẩm vào giỏ hàng")
-        
-    } 
-    return (
-        <div>
-            <div style={{ borderBottom: "1px solid #ddd", boxShadow: "0px 0px 5px gray " }}>
-                <div style={{ width: "80%", margin: " auto" }}>
-                    <nav >
-                        <ul style={{ padding: "10px 0", margin: "auto" }}>
-                            <Li><Link2 to={""}>Trang chủ</Link2></Li>
-                            <Li><Link2 to={""}>Điện thoại</Link2></Li>
-                            <Li><Link2 to={""}>Samsung</Link2></Li>
-                            <Li><Link2 to={""}>Samsung Galaxy A73 (5G) 256GB</Link2></Li>
-                        </ul>
-                    </nav>
-                </div>
+  // console.log(abc);
 
-            </div>
-            <div style={{ width: "80%", margin: " auto" }}>
-                <Title >{productId?.name}</Title>
-                <div >
-                    <Product>
-                        <a href=""><img src={productId.image} alt="" width={350} /></a>
-                        <div>
-                            <p ><span style={{ color: "red", fontSize: "24px", fontWeight: "600" }}>{currency(Number(productId?.saleOffPrice))} đ </span><span style={{ color: "gray", paddingLeft: "10px" }}>{currency(Number(productId?.originalPrice))} đ</span></p>
-                            <p> Mô tả ngắn: {productId?.feature}</p>
-                            {/* <form action=""> */}
-                                {/* <input type="number" min={0} defaultValue={"1"} placeholder='Số sản phẩm' /> */}
-                                <p style={{ margin: "30px 0" }}>
-                                    <Btn onClick={() => addToCart(productId)}>Thêm vào giỏ hàng</Btn>
-                                </p>
-                            {/* </form> */}
-                        </div>
-                    </Product>
-                </div>
-            </div>
+  useEffect(() => {
+    const getProductById = async (id: any) => {
+      const { data } = await getProductId(id);
+      setProductId(data)
+    }
+    getProductById(id);
+  }, [])
 
-        </div>
+  const addToCart = (product: any) => {
+    console.log(product);
+    const add = addItem(
+      {
+        id: productId.id,
+        name: productId.name,
+        price: productId.saleOffPrice,
+        image: productId.image,
+        originalPrice: productId.originalPrice,
+        feature: productId.feature,
+        description: productId.description,
+        categories: productId.categories
+      }
     )
+
+    message.success("Đã thêm 1 sản phẩm vào giỏ hàng")
+
+  }
+  return (
+    <div>
+      <div style={{ borderBottom: "1px solid #ddd", boxShadow: "0px 0px 5px gray " }}>
+        <div style={{ width: "80%", margin: " auto" }}>
+          <nav >
+            <ul style={{ padding: "10px 0", margin: "auto" }}>
+              <Li><Link2 to={"/"}>Trang chủ</Link2></Li>
+              <Li><Link2 to={""}>{productId.categories}</Link2></Li>
+              <Li><Link2 to={""}>{productId.name}</Link2></Li>
+            </ul>
+          </nav>
+        </div>
+
+      </div>
+      <div style={{ width: "80%", margin: " auto" }}>
+        <Title >{productId?.name}</Title>
+        <div >
+          <Product>
+            <a href=""><img src={productId.image} alt="" width={350} /></a>
+            <div>
+              <p ><span style={{ color: "red", fontSize: "24px", fontWeight: "600" }}>{currency(Number(productId?.saleOffPrice))} đ </span><span style={{ color: "gray", paddingLeft: "10px" }}>{currency(Number(productId?.originalPrice))} đ</span></p>
+              <p> Mô tả ngắn: {productId?.feature}</p>
+              {/* <form action=""> */}
+              {/* <input type="number" min={0} defaultValue={"1"} placeholder='Số sản phẩm' /> */}
+              <p style={{ margin: "200px auto" }}>
+                <Link to={'/cart'}><Btn onClick={() => addToCart(productId)}>Mua ngay</Btn></Link>
+                <Buton onClick={() => addToCart(productId)}><ShoppingCartOutlined /></Buton>
+                <p style={{display: 'inline-block'}}>Thêm vào <br /> giỏ hàng</p>
+              </p>
+              <div>
+              </div>
+              {/* </form> */}
+            </div>
+          </Product>
+        </div>
+      </div>
+      <div style={{ width: "80%", margin: " auto" }}>
+        <div dangerouslySetInnerHTML={{ __html: `${productId.description}` }}>
+        </div>
+      </div>
+
+    </div>
+  )
 }
 
 const Li = styled.li`
@@ -104,8 +113,9 @@ const Btn = styled.button`
     background-color: red;
     transition:all .2s linear;
     color: #fff;
-    padding: 10px 30px;
+    padding: 15px 90px;
     border: 0;
+    border-radius: 10px;
     :hover{
         /* border: 1px solid green; */
         background-color: orange;
@@ -114,5 +124,15 @@ const Btn = styled.button`
 
     }
 `
+const Buton = styled.button`
+  font-size: 30px;
+  border solid 1px red;
+  border-radius: 5px;
+  background-color: white;
+  margin: 0 10px;
+  color: red;
+  cursor: pointer;
+  padding: 0 10px
+  `
 
 export default DetailProduct
