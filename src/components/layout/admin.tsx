@@ -27,18 +27,18 @@ const AdminLayout: React.FC = () => (
       {/* <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} /> */}
     </HeaderCustom>
     <Layout>
-      <Sider
-        collapsible={true}
-        width={200}
-        className="site-layout-background">
-        <Menu
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['sub1']}
-          style={{ height: '100%', borderRight: 0 }}
-          items={item3}
-        />
-      </Sider>
+        <Sider
+          collapsible={true}
+          width={200}
+          className="site-layout-background">
+          <Menu
+            mode="inline"
+            defaultSelectedKeys={['1']}
+            defaultOpenKeys={['sub1']}
+            style={{ height: '100%', borderRight: 0 }}
+            items={item3}
+          />
+        </Sider>
       <Layout style={{ padding: '0 24px 24px' }}>
         <ContentCustom>
           <Outlet />

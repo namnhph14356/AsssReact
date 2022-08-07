@@ -16,12 +16,13 @@ import CartPage from './pages/Home/Cart'
 import EditCategories from './pages/Admin/Categories/edit'
 import SignupPage from './pages/Auth/signup'
 import PrivateRoute from './midlerware/PrivateRouter'
+import ListProductByCate from './components/ListProductByCate'
 
 
 function App() {
   return (
     <div className="App">
-      <Routes>
+      <Routes >
         {/* Auth */}
         <Route path='/signin' element={<SigninPage/>}/>
         <Route path='/signup' element={<SignupPage/>}/>
@@ -31,6 +32,8 @@ function App() {
           <Route index element={<HomePage/>}/>
           <Route path='/detail/:id' element={<DetailProduct />} />
           <Route path='/cart' element={<CartPage />} />
+          <Route path='/categories/:id' element={<ListProductByCate />} />
+
 
         </Route>
         {/* Admin layout */}

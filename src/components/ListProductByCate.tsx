@@ -1,23 +1,61 @@
-import { Card, List } from 'antd';
-import React from 'react'
-import styled from 'styled-components';
-
-import { StarOutlined, StarTwoTone } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { List, Menu } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import styled from 'styled-components'
+import { currency } from '../helpers/money'
+import { StarOutlined, StarTwoTone, MailOutlined } from '@ant-design/icons';
 import { useQuery } from 'react-query'
-import { currency } from '../helpers/money';
-import { getAll } from '../api/product';
-type Props = {}
+import { getProducCate } from '../api/product'
+import { getCateId, listCate } from '../api/category'
 
-const ListProduct = (props: Props) => {
+
+
+const ListProductByCate = () => {
+    const [product, setProduct] = useState<any>([])
+    const { id } = useParams();
+    const [category, setCategory] = useState<any>([])
+    const [cate, setCate] = useState<any>({})
+    useEffect(() => {
+        const getCate = async (id:any) => {
+            const { data } = await getCateId(id)
+            setCate(data)
+        }
+        getCate(id)
+    },[])
+    console.log(cate);
     
+    useEffect(() => {
+        const listcategory = async () => {
+            const { data } = await listCate();
 
-    const { isLoading, data, error } = useQuery<any>(['Product'], getAll)
-    const loadData = data?.data
+            setCategory(data)
+        }
+        listcategory();
 
+    }, [])
+    console.log(product);
+    
+    useEffect(() => {
+        const getProductByCate = async (id: any) => {
+            const { data } = await getProducCate(id);
+            setProduct(data)
+        }
+        getProductByCate(id);
+    }, [])
     return (
-        <div  >
-            <Title>ĐIỆN THOẠI NỔI BẬT NHẤT</Title>
+        <div style={{ width: "80%", margin: "30px auto" }}>
+            <Menu mode="horizontal" defaultSelectedKeys={[category.id]}>
+                {category?.map((item: any, index: any) =>
+                
+                    <Link to={`/categories/${item.id}`}>
+                        <Menu.Item key={item.id} icon={<MailOutlined />}>
+                            {item.name}
+                        </Menu.Item>
+                    </Link>
+                )}
+            </Menu>
+
+            <Title>Danh mục {cate.name}</Title>
             <List
                 grid={{
                     gutter: 16,
@@ -29,7 +67,7 @@ const ListProduct = (props: Props) => {
                     xxl: 3,
                 }}
 
-                dataSource={loadData}
+                dataSource={product}
                 renderItem={(item: any) => (
                     <List.Item>
 
@@ -65,7 +103,6 @@ const ListProduct = (props: Props) => {
         </div>
     )
 }
-
 const Title = styled.p`
     font-size: 22px;
     font-weight: 600;
@@ -77,5 +114,4 @@ const Desc = styled.div`
      background:#F3F4F6;
      padding:5px ;
 `
-
-export default ListProduct
+export default ListProductByCate

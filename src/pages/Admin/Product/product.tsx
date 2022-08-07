@@ -85,8 +85,8 @@ const ProductAdminPage = () => {
         },
         {
             title: 'Loại hàng',
-            dataIndex: 'categories',
-            key: 'categories',
+            dataIndex: 'categoriesId',
+            key: 'categoriesId',
             filters: category.map((item: any) => { return { text: item.name, value: item.id } }),
             onFilter: (value, record: any) => {
                 console.log(record.categories);

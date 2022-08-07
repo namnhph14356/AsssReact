@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, MailOutlined, RightOutlined, LeftOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { listCate } from '../api/category';
 import { Link } from 'react-router-dom';
 import { getProducCate } from '../api/product';
+import Sider from 'antd/lib/layout/Sider';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -54,14 +55,26 @@ const Sidebar = () => {
 
     getItem(item.name, item.id, <AppstoreOutlined />)
   )
+  const item3: MenuProps['items'] =  category?.map((item: any, index: any) => (
+    { key: `${item.name}`, label: <Link to={`/categories/${item.id}`}>{item.name} <span style={{width: '120px', float: 'right'}}><RightOutlined /></span></Link> }
+   
+  ))
   return (
-    <Menu
-      onClick={onClick}
-      style={{ width: 256 }}
-      defaultOpenKeys={['sub1']}
-      mode="inline"
-      items={items}
-    />
+    
+        <Menu
+          mode="inline"
+          defaultSelectedKeys={['1']}
+          defaultOpenKeys={['sub1']}
+          style={{ height: '100%', borderRight: 0 }}
+          items={item3}
+        />
+    // <Menu
+    //   onClick={onClick}
+    //   style={{ width: 256 }}
+    //   defaultOpenKeys={['sub1']}
+    //   mode="inline"
+    //   items={items}
+    // />
   );
 };
 

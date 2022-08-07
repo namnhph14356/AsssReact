@@ -17,7 +17,6 @@ const DetailProduct = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const productCate = useSelector((item: any) => item.product.value)
-  console.log(productCate);
   const spCungLoai = productCate.filter((item: { id: any }) => item.id != productId.id)
 
   const { addItem } = useCart();
@@ -26,15 +25,16 @@ const DetailProduct = () => {
   useEffect(() => {
     const getProductById = async (id: any) => {
       const { data } = await getProductId(id);
-      dispatch(getProductIdCateDetail(Number(data.categories)))
+      dispatch(getProductIdCateDetail(Number(data.categoriesId)))
       setProductId(data)
+      
     }
     getProductById(id);
 
   }, [])
+console.log(productId);
 
   const addToCart = (product: any) => {
-    console.log(product);
     const add = addItem(
       {
         id: productId.id,
@@ -44,14 +44,13 @@ const DetailProduct = () => {
         originalPrice: productId.originalPrice,
         feature: productId.feature,
         description: productId.description,
-        categories: productId.categories
+        categories: productId.categoriesId
       }
     )
 
     message.success("Đã thêm 1 sản phẩm vào giỏ hàng")
 
   }
-  console.log(product);
 
 
   return (
@@ -61,7 +60,7 @@ const DetailProduct = () => {
           <nav >
             <ul style={{ padding: "10px 0", margin: "auto" }}>
               <Li><Link2 to={"/"}>Trang chủ</Link2></Li>
-              <Li><Link2 to={""}>{productId.categories}</Link2></Li>
+              <Li><Link2 to={""}>{productId.categoriesId}</Link2></Li>
               <Li><Link2 to={""}>{productId.name}</Link2></Li>
             </ul>
           </nav>

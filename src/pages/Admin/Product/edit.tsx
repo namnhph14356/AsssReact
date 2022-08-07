@@ -145,7 +145,7 @@ const EditProduct = () => {
 							<Col span={12}>
 								<Form.Item
 									label="Phân loại"
-									name="categories"
+									name="categoriesId"
 									rules={[{ required: true }]}
 								>
 									<Select style={{ width: '100%' }} size="large">
