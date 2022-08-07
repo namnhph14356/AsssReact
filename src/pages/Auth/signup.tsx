@@ -6,66 +6,82 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
-import { signin } from '../../api/auth';
+import { signup } from '../../api/auth';
+
 
 type FormTypes = {
-	name: string,
-	email: string,
-	password: string,
-	phone: number
+    name: string,
+    email: string,
+    password: string,
+    phone: number,
+    role: number,
 }
-
 const fromSchema = yup.object().shape({
-	email: yup.string().required("Không được để trống").email("It not Email"),
-	password: yup
-		.string()
-		.required("Không được để trống")
-		.min(6, "Phải lớn hơn 6 kí tự"),
+    phone: yup
+        .string()
+        .required("Không được để trống")
+        .min(10, "Ít nhất 10 ký tự"),
+    name: yup
+        .string()
+        .required("Không được để trống")
+        .min(3, "Ít nhất 3 ký tự"),
+    email: yup.string().required("Không được để trống").email("Đây không phải định dạng email").min(8,"Ít nhất 8 ký tự"),
+    password: yup
+        .string()
+        .required("Không được để trống")
+        .min(5, "Ít nhất 5 ký tự"),
 
 });
 const validation = { resolver: yupResolver(fromSchema) };
-const SigninPage: React.FC = () => {
 
-	const { register, handleSubmit, formState } = useForm<FormTypes>(validation);
-	const { errors } = formState;
-	const navigate = useNavigate()
+const SignupPage: React.FC = () => {
+    const { register, handleSubmit, formState } = useForm<FormTypes>(validation);
+    const { errors } = formState;
+    const navigate = useNavigate()
+    const onSubmit: SubmitHandler<FormTypes> = async (user: any) => {
+        try {
+            console.log(user);
+            const { data } = await signup(user)
+            if (data == "Email already exists") {
+                message.error("Username is exist")
+            } else {
+                message.success("Đăng kí tài khoản mới thành công !")
+                navigate("/signin")
+            }
+        } catch (error) {
+            console.log(error);
 
-	const onSubmit: SubmitHandler<FormTypes> = async (user: any) => {
-		try {
-			const { data } = await signin(user)
-			if (data == "Cannot find user") {
-				message.error("Email không tồn tại")
-			} else if (data == "Incorrect password") {
-				message.error("Mật khẩu không chính xác")
-			} else {
-				message.success("Đăng nhập thành công !");
-				localStorage.setItem("user", JSON.stringify(data))
-				navigate("/")
+        }
+    }
 
-			}
 
-		} catch (error) {
-			console.log(error);
 
-		}
-	}
 
-	return (
-		<Container>
-			<Form onSubmit={handleSubmit(onSubmit)}>
+    return (
+        <Container>
+            <Form onSubmit={handleSubmit(onSubmit)}>
                 <Col>
-                    
+                    <div>
+                        <Label htmlFor="name">Họ và tên</Label><br />
+                        <Input type="text" {...register("name", { required: true, minLength: 3 })} />
+                        <Error>{errors.name?.message} </Error>
+                    </div>
                     <div>
                         <Label htmlFor="email">Email</Label><br />
                         <Input type="email" {...register("email", { required: true, minLength: 3 })} />
                         <Error>{errors.email?.message} </Error>
                     </div>
-                    
+                    <div>
+                        <Label htmlFor="phone">Số điện thoại</Label><br />
+                        <Input type="number" {...register("phone", { required: true, minLength: 10})} />
+                        <Error> {errors.phone?.message}</Error>
+                    </div>
                     <div>
                         <Label htmlFor="password">Password</Label><br />
                         <Input type="password" {...register("password", { required: true, minLength: 5 })} />
                         <Error>{errors.password?.message} </Error>
                     </div>
+                    <Input type="role" style={{ display: "none" }} value={1} {...register("role", { required: true, minLength: 6 })} />
                     <Btn>Đăng kí</Btn>
                 </Col>
 
@@ -83,10 +99,11 @@ const SigninPage: React.FC = () => {
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/2048px-Facebook_f_logo_%282019%29.svg.png" width={'30px'} style={{ margin: '0 20px' }} alt="" />
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/800px-Google_%22G%22_Logo.svg.png" width={'30px'} alt="" />
                     </div>
-                </FaceBook>
+                </FaceBook> 
             </Form>
-		</Container>
-	);
+
+        </Container>
+    );
 };
 const Container = styled.div`
     background-color: #D9D9D9;
@@ -149,4 +166,4 @@ const Error = styled.div`
     color: red;
     margin-bottom: 10px;
 	`
-export default SigninPage;
+export default SignupPage;

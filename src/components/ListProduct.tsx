@@ -10,6 +10,7 @@ import { getAll } from '../api/product';
 type Props = {}
 
 const ListProduct = (props: Props) => {
+    
 
     const { isLoading, data, error } = useQuery<any>(['Product'], getAll)
     const loadData = data?.data

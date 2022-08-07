@@ -33,7 +33,7 @@ const Container = styled.div`
     width: 1200px;
     margin: auto;
     display:grid ;
-    grid-template-columns: 2fr 4fr 5fr;
+    grid-template-columns: 1fr 2fr 5fr;
     gap:30px;
     align-items: center;
 `

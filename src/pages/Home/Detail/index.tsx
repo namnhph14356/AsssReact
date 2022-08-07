@@ -1,28 +1,36 @@
-import { message } from 'antd'
+import { List, message } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import { useCart } from 'react-use-cart'
 import styled from 'styled-components'
-import { getProductId } from '../../../api/product'
+import { getAll, getProducCate, getProductId } from '../../../api/product'
 import { currency } from '../../../helpers/money'
 import { ShoppingCartOutlined } from '@ant-design/icons';
+import { getProductIdCateDetail } from '../../../features/Product'
+import { StarOutlined, StarTwoTone } from '@ant-design/icons';
+
 
 const DetailProduct = () => {
   const [productId, setProductId] = useState<any>({})
+  const [product, setProduct] = useState<any>([])
   const { id } = useParams();
   const dispatch = useDispatch();
+  const productCate = useSelector((item: any) => item.product.value)
+  console.log(productCate);
+  const spCungLoai = productCate.filter((item: { id: any }) => item.id != productId.id)
 
   const { addItem } = useCart();
 
-  // console.log(abc);
 
   useEffect(() => {
     const getProductById = async (id: any) => {
       const { data } = await getProductId(id);
+      dispatch(getProductIdCateDetail(Number(data.categories)))
       setProductId(data)
     }
     getProductById(id);
+
   }, [])
 
   const addToCart = (product: any) => {
@@ -43,6 +51,9 @@ const DetailProduct = () => {
     message.success("Đã thêm 1 sản phẩm vào giỏ hàng")
 
   }
+  console.log(product);
+
+
   return (
     <div>
       <div style={{ borderBottom: "1px solid #ddd", boxShadow: "0px 0px 5px gray " }}>
@@ -67,10 +78,10 @@ const DetailProduct = () => {
               <p> Mô tả ngắn: {productId?.feature}</p>
               {/* <form action=""> */}
               {/* <input type="number" min={0} defaultValue={"1"} placeholder='Số sản phẩm' /> */}
-              <p style={{ margin: "200px auto" }}>
+              <p style={{ margin: "50px auto" }}>
                 <Link to={'/cart'}><Btn onClick={() => addToCart(productId)}>Mua ngay</Btn></Link>
                 <Buton onClick={() => addToCart(productId)}><ShoppingCartOutlined /></Buton>
-                <p style={{display: 'inline-block'}}>Thêm vào <br /> giỏ hàng</p>
+                <p style={{ display: 'inline-block' }}>Thêm vào <br /> giỏ hàng</p>
               </p>
               <div>
               </div>
@@ -78,8 +89,63 @@ const DetailProduct = () => {
             </div>
           </Product>
         </div>
+        <div>
+          <div>
+            <Title >Sản phẩm cùng loại</Title>
+
+            <List
+              grid={{
+                gutter: 12,
+                xs: 1,
+                sm: 2,
+                md: 4,
+                lg: 4,
+                xl: 5,
+                xxl: 3,
+              }}
+
+              dataSource={spCungLoai}
+              renderItem={(item: any) => (
+                <List.Item>
+
+                  <div>
+                    <div style={{ textAlign: "center" }}>
+                      <a href={`/detail/${item.id}`} ><img src={item.image} alt="" width={140} /></a>
+                    </div>
+                    <Link to={`/detail/${item.id}`} className="name" style={{ marginTop: "10px", color: "black" }}>{item.name}</Link>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                      <p style={{ color: "red" }}>{currency(item.saleOffPrice)} ₫</p>
+                      <p style={{ color: "gray", fontSize: "13px" }}>{currency(item.originalPrice)} ₫</p>
+                    </div>
+                    <Desc >
+                      {/* <p >{item.description}</p> */}
+                      <div>{item.feature}</div>
+                    </Desc>
+                    <div style={{ display: "flex", gap: "10px" }}>
+                      <div className="star">
+                        <StarTwoTone twoToneColor="black" />
+                        <StarTwoTone twoToneColor="black" />
+                        <StarOutlined />
+                        <StarOutlined />
+                        <StarOutlined />
+                      </div>
+                      <div>
+                        <p>9999 đánh giá</p>
+                      </div>
+                    </div>
+                  </div>
+                </List.Item>
+              )}
+            />
+          </div>
+        </div>
       </div>
+
       <div style={{ width: "80%", margin: " auto" }}>
+        <Feature>
+          <h3 style={{ color: "red", textAlign: "center" }}>ĐẶC ĐIỂM  NỔI BẬT</h3>
+          <p>{productId.feature}</p>
+        </Feature>
         <div dangerouslySetInnerHTML={{ __html: `${productId.description}` }}>
         </div>
       </div>
@@ -134,5 +200,18 @@ const Buton = styled.button`
   cursor: pointer;
   padding: 0 10px
   `
+const Desc = styled.div`
+    border: 1px solid #F3F4F6;
+    border-radius:5px;
+     background:#F3F4F6;
+     padding:5px ;
+`
+const Feature = styled.div`
+    margin: 30px 0;
+    padding:10px 20px;
+    background-color: #F2F2F2;
+    border: 1px solid #F2F2F2;
+    border-radius: 6px;
+`
 
 export default DetailProduct

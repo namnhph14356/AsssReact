@@ -14,6 +14,8 @@ import DetailProduct from './pages/Home/Detail'
 import { CartProvider } from 'react-use-cart'
 import CartPage from './pages/Home/Cart'
 import EditCategories from './pages/Admin/Categories/edit'
+import SignupPage from './pages/Auth/signup'
+import PrivateRoute from './midlerware/PrivateRouter'
 
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
       <Routes>
         {/* Auth */}
         <Route path='/signin' element={<SigninPage/>}/>
+        <Route path='/signup' element={<SignupPage/>}/>
+
         {/* User layout */}
         <Route path='/' element={<CartProvider><UserLayout/></CartProvider>}>
           <Route index element={<HomePage/>}/>
@@ -30,7 +34,7 @@ function App() {
 
         </Route>
         {/* Admin layout */}
-        <Route path='admin' element={<AdminLayout/>}>
+        <Route path='admin' element={<PrivateRoute><AdminLayout /></PrivateRoute>}>
           <Route index element={<ProductAdminPage/>}/>
           <Route path='product' element={<ProductAdminPage />} />
           <Route path='product/add' element={<AddProductPage/>}/>

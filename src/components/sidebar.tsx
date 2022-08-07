@@ -4,6 +4,7 @@ import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { listCate } from '../api/category';
 import { Link } from 'react-router-dom';
+import { getProducCate } from '../api/product';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -39,10 +40,14 @@ const Sidebar = () => {
 
   }, [])
 
-  const onClick: MenuProps['onClick'] = e => {
+  const onClick: MenuProps['onClick'] = async (e) => {
     console.log('click ', e);
+    console.log(e.keyPath[0]);
+
+    const { data } = await getProducCate(Number(e.keyPath[0]));
+    console.log(data);
     
-    
+
   };
   const items: MenuProps['items'] = category?.map((item: any, index: any) =>
 
