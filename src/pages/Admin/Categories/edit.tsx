@@ -21,7 +21,6 @@ const EditCategories = () => {
         if (id) {
             const getCate = async (id: any) => {
                 const { data } = await getCateId(id);
-                console.log(data.image);
                 form.setFieldsValue(data)
                 // onreset(payload)
 

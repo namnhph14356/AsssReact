@@ -47,7 +47,7 @@ const EditProduct = () => {
   useEffect(() => {
     const listcategory = async () => {
         const { data } = await listCate();
-        console.log(data);
+        console.log(data); 
 
         setCategory(data)
     }

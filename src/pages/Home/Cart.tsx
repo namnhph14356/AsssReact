@@ -6,35 +6,36 @@ import styled from 'styled-components';
 import { CloseOutlined, PlusSquareFilled, MinusSquareFilled } from '@ant-design/icons';
 import { Modal } from 'antd';
 import { currency } from '../../helpers/money';
+import { Link } from 'react-router-dom';
 const CartPage = () => {
   const { items, cartTotal, updateItemQuantity, removeItem } = useCart();
   console.log(items);
 
-  const minus = (item:any) => {
+  const minus = (item: any) => {
     if (item.quantity == 1) {
       Modal.confirm({
-        title:"Bạn có chắc muốn xóa sản phẩm này không ?",
+        title: "Bạn có chắc muốn xóa sản phẩm này không ?",
         onOk: () => {
           updateItemQuantity(item.id, Number(item.quantity) - 1)
         },
-        
-        
-       })
-    }else{
+
+
+      })
+    } else {
       updateItemQuantity(item.id, Number(item.quantity) - 1)
 
     }
   }
   const deleteCart = (item: any) => {
     Modal.confirm({
-        title: "Bạn có chắc muốn xóa sản phẩm này không ?",
-        onOk:() => {
-            removeItem(item)
-        },
-        onCancel: () => {
-            return false
-        }
-        
+      title: "Bạn có chắc muốn xóa sản phẩm này không ?",
+      onOk: () => {
+        removeItem(item)
+      },
+      onCancel: () => {
+        return false
+      }
+
     })
   }
   return (
@@ -55,7 +56,7 @@ const CartPage = () => {
                 <div style={{ margin: "auto 0", display: "flex" }}>
 
                   <div style={{ margin: "auto" }}>
-                    <PlusSquareFilled onClick={() => updateItemQuantity(item.id, Number(item.quantity) + 1)} style={{ color: "red", fontSize: "26px",cursor:"pointer" }} />
+                    <PlusSquareFilled onClick={() => updateItemQuantity(item.id, Number(item.quantity) + 1)} style={{ color: "red", fontSize: "26px", cursor: "pointer" }} />
                   </div>
 
                   <div>
@@ -63,15 +64,15 @@ const CartPage = () => {
                   </div>
 
                   <div style={{ margin: "auto" }}>
-                    <MinusSquareFilled onClick={() => minus(item)} style={{ color: "red", fontSize: "26px",cursor:"pointer" }} />
+                    <MinusSquareFilled onClick={() => minus(item)} style={{ color: "red", fontSize: "26px", cursor: "pointer" }} />
                   </div>
                 </div>
               </SoLuong>
               <KhuyenMai>
                 <p>{item.feature}</p>
               </KhuyenMai>
-              <h3>Tổng tiền sản phẩm: <span style={{color: 'red'}}>{currency(item.itemTotal)}</span></h3>
-              <Delete ><button style={{border: 'none', backgroundColor: 'white', cursor:'pointer'}} onClick={() => deleteCart(item.id)}><CloseOutlined /></button></Delete>
+              <h3>Tổng tiền sản phẩm: <span style={{ color: 'red' }}>{currency(item.itemTotal)}</span></h3>
+              <Delete ><button style={{ border: 'none', backgroundColor: 'white', cursor: 'pointer' }} onClick={() => deleteCart(item.id)}><CloseOutlined /></button></Delete>
             </div>
 
           </Row>
@@ -82,10 +83,10 @@ const CartPage = () => {
             <p style={{ color: "red" }}>{currency(cartTotal)} ₫</p>
           </TongTien>
           <div>
-            <DatHang>Tiến hành đặt hàng</DatHang>
+            <Link to={'/checkout'}><DatHang>Tiến hành đặt hàng</DatHang></Link>
           </div>
           <div>
-            <ThemSanPhamKhac>Chọn thêm sản phẩm khác</ThemSanPhamKhac>
+            <Link to='/'> <ThemSanPhamKhac>Chọn thêm sản phẩm khác</ThemSanPhamKhac></Link>
           </div>
         </div>
 

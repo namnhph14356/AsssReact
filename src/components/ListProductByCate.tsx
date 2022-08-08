@@ -31,6 +31,7 @@ const ListProductByCate = () => {
             setCategory(data)
         }
         listcategory();
+        
 
     }, [])
     console.log(product);
@@ -41,7 +42,7 @@ const ListProductByCate = () => {
             setProduct(data)
         }
         getProductByCate(id);
-    }, [])
+    }, [id])
     return (
         <div style={{ width: "80%", margin: "30px auto" }}>
             <Menu mode="horizontal" defaultSelectedKeys={[category.id]}>

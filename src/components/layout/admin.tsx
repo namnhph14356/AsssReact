@@ -10,13 +10,14 @@ import LogoImage from '../../assets/images/logo.png'
 const { Header, Content, Sider } = Layout;
 
 const item3: MenuProps['items'] = [
-  { key: "cellphone", icon: <PhoneOutlined />, label: <Link to="/admin/product">Điện thoại</Link> },
-  { key: "laptop", icon: <LaptopOutlined />, label: "Laptop" },
-  { key: "tablet", icon: <TabletFilled />, label: "Máy tính bảng" },
-  { key: "audio", icon: <AudioOutlined />, label: "Âm thanh" },
+  { key: "cellphone", icon: <PhoneOutlined />, label: <Link to="/admin/product">Sản phẩm</Link> },
   {
     key: "categories", icon: <SettingOutlined />,
-    label: <Link to="/admin/categories">Categories</Link>
+    label: <Link to="/admin/categories">Danh mục</Link>
+  },
+  {
+    key: "orders", icon: <SettingOutlined />,
+    label: <Link to="/admin/order">Đơn hàng</Link>
   },
 ]
 

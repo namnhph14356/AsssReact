@@ -27,12 +27,34 @@ const DetailProduct = () => {
       const { data } = await getProductId(id);
       dispatch(getProductIdCateDetail(Number(data.categoriesId)))
       setProductId(data)
-      
+
     }
     getProductById(id);
 
-  }, [])
-console.log(productId);
+  }, [id])
+  const [dataTable, setDataTable] = useState<any>([])
+
+  useEffect(() => {
+    const getproduct = async (id: any) => {
+      const { data } = await getProductId(id);
+      console.log(data);
+
+      setDataTable({
+        categories: data.categories.name,
+        categoriesId: data.categoriesId,
+        description: data.description,
+        feature: data.feature,
+        id: data.id,
+        image: data.image,
+        name: data.name,
+        originalPrice: data.originalPrice,
+        saleOffPrice: data.saleOffPrice
+
+      })
+    }
+    getproduct(id)
+  }, [id])
+  console.log(dataTable);
 
   const addToCart = (product: any) => {
     const add = addItem(
@@ -60,21 +82,21 @@ console.log(productId);
           <nav >
             <ul style={{ padding: "10px 0", margin: "auto" }}>
               <Li><Link2 to={"/"}>Trang chủ</Link2></Li>
-              <Li><Link2 to={""}>{productId.categoriesId}</Link2></Li>
-              <Li><Link2 to={""}>{productId.name}</Link2></Li>
+              <Li><Link2 to={`/categories/${dataTable.categoriesId}`}>{dataTable.categories}</Link2></Li>
+              <Li><Link2 to={""}>{dataTable.name}</Link2></Li>
             </ul>
           </nav>
         </div>
 
       </div>
       <div style={{ width: "80%", margin: " auto" }}>
-        <Title >{productId?.name}</Title>
+        <Title >{dataTable?.name}</Title>
         <div >
           <Product>
-            <a href=""><img src={productId.image} alt="" width={350} /></a>
+            <a href=""><img src={dataTable.image} alt="" width={350} /></a>
             <div>
-              <p ><span style={{ color: "red", fontSize: "24px", fontWeight: "600" }}>{currency(Number(productId?.saleOffPrice))} đ </span><span style={{ color: "gray", paddingLeft: "10px" }}>{currency(Number(productId?.originalPrice))} đ</span></p>
-              <p> Mô tả ngắn: {productId?.feature}</p>
+              <p ><span style={{ color: "red", fontSize: "24px", fontWeight: "600" }}>{currency(Number(dataTable?.saleOffPrice))} đ </span><span style={{ color: "gray", paddingLeft: "10px" }}>{currency(Number(dataTable?.originalPrice))} đ</span></p>
+              <p> Mô tả ngắn: {dataTable?.feature}</p>
               {/* <form action=""> */}
               {/* <input type="number" min={0} defaultValue={"1"} placeholder='Số sản phẩm' /> */}
               <p style={{ margin: "50px auto" }}>
@@ -109,7 +131,7 @@ console.log(productId);
 
                   <div>
                     <div style={{ textAlign: "center" }}>
-                      <a href={`/detail/${item.id}`} ><img src={item.image} alt="" width={140} /></a>
+                      <Link to={`/detail/${item.id}`} ><img src={item.image} alt="" width={140} /></Link>
                     </div>
                     <Link to={`/detail/${item.id}`} className="name" style={{ marginTop: "10px", color: "black" }}>{item.name}</Link>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>

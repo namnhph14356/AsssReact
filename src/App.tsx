@@ -17,6 +17,9 @@ import EditCategories from './pages/Admin/Categories/edit'
 import SignupPage from './pages/Auth/signup'
 import PrivateRoute from './midlerware/PrivateRouter'
 import ListProductByCate from './components/ListProductByCate'
+import Checkout from './pages/Home/Checkout'
+import ListOrder from './pages/Admin/Order/listOrder'
+import EditOrder from './pages/Admin/Order/edit'
 
 
 function App() {
@@ -33,7 +36,7 @@ function App() {
           <Route path='/detail/:id' element={<DetailProduct />} />
           <Route path='/cart' element={<CartPage />} />
           <Route path='/categories/:id' element={<ListProductByCate />} />
-
+          <Route path='/checkout' element={<Checkout/>} />
 
         </Route>
         {/* Admin layout */}
@@ -44,7 +47,8 @@ function App() {
           <Route path='product/edit/:id' element={<EditProduct/>}/>
           <Route path='categories' element={<ListCategory />}/>
           <Route path='categories/edit/:id' element={<EditCategories/>}/>
-
+          <Route path='order' element={<ListOrder/>}/>
+          <Route path='order/detail/:id' element={< EditOrder />}/>
         </Route>
       </Routes>
     </div>

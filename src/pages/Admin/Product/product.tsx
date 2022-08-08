@@ -16,43 +16,57 @@ interface DataType {
     saleOffPrice: number;
     feature: string;
     description: string;
+    categories: any,
+    categoriesId: any
 }
 
 
 const ProductAdminPage = () => {
-    const [dataTable, setDataTable] = useState([])
+    const [dataTable, setDataTable] = useState<any>([])
     const [category, setCategory] = useState([])
     const [confirmLoading, setConfirmLoading] = useState(false);
     // const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate();
     const [form] = Form.useForm();
 
+
     // fetchData()
     useEffect(() => {
         const listcategory = async () => {
             const { data } = await listCate();
-            console.log(data);
 
             setCategory(data)
         }
         listcategory();
+
         const getproduct = async () => {
             const { data } = await getAll();
             console.log(data);
-            
-            setDataTable(data)
+
+            setDataTable(data.map((item: any) => {
+                return {
+                    categories: item.categories.name,
+                    categoriesId: item.categoriesId,
+                    description: item.description,
+                    feature: item.feature,
+                    id: item.id,
+                    image: item.image,
+                    name: item.name,
+                    originalPrice: item.originalPrice,
+                    saleOffPrice: item.saleOffPrice
+                }
+            }))
         }
         getproduct()
     }, [])
 
     const { isLoading, data, error } = useQuery(['Products'], getAll)
-    console.log(data);
     const onRemoveProduct = (id: any) => {
         setConfirmLoading(true);
         message.loading({ content: 'Loading...' });
 
         setTimeout(() => {
-            
+
             removeProduct(id);
             setConfirmLoading(false);
             message.success({ content: 'Xóa Thành Công!', duration: 2 });
@@ -65,13 +79,13 @@ const ProductAdminPage = () => {
             title: 'Tên sản phẩm',
             dataIndex: 'name',
             key: 'name',
-            render: text => <a><p style={{maxWidth: '30ch',display: 'inline-block',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{text}</p></a>,
+            render: text => <a><p style={{ maxWidth: '30ch', display: 'inline-block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{text}</p></a>,
         },
         {
             title: 'Hình ảnh',
             dataIndex: 'image',
             key: 'image',
-            render: text => <img src={text} alt=""  width={100}/>,
+            render: text => <img src={text} alt="" width={100} />,
 
 
         },
@@ -79,18 +93,18 @@ const ProductAdminPage = () => {
             title: 'Đặc điểm',
             dataIndex: 'feature',
             key: 'feature',
-            render: text => <a><p style={{maxWidth: '15ch',display: 'inline-block',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{text}</p></a>,
+            render: text => <a><p style={{ maxWidth: '15ch', display: 'inline-block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{text}</p></a>,
 
 
         },
         {
             title: 'Loại hàng',
-            dataIndex: 'categoriesId',
-            key: 'categoriesId',
+            dataIndex: 'categories',
+            key: 'categories',
             filters: category.map((item: any) => { return { text: item.name, value: item.id } }),
             onFilter: (value, record: any) => {
                 console.log(record.categories);
-                console.log(value); 
+                console.log(value);
 
                 return record.categories == value
             }
