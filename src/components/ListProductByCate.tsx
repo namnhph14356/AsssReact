@@ -79,7 +79,7 @@ const ListProductByCate = () => {
                             <Link to={`/detail/${item.id}`} className="name" style={{ marginTop: "10px", color: "black" }}>{item.name}</Link>
                             <div style={{ display: "flex", justifyContent: "space-between" }}>
                                 <p style={{ color: "red" }}>{currency(item.saleOffPrice)} ₫</p>
-                                <p style={{ color: "gray", fontSize: "13px" }}>{currency(item.originalPrice)} ₫</p>
+                                <p style={{ color: "gray", fontSize: "13px",textDecoration:'line-through' }}>{currency(item.originalPrice)} ₫</p>
                             </div>
                             <Desc >
                                 {/* <p >{item.description}</p> */}

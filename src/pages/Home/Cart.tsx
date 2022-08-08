@@ -50,7 +50,7 @@ const CartPage = () => {
             </div>
             <div className="col" style={{ position: "relative" }}>
               <NameProduct>{item.name}</NameProduct>
-              <p><span style={{ color: "red", fontSize: "18px" }}>{currency(item.price)} ₫</span> <span style={{ color: "gray", paddingLeft: "10px" }}>{currency(item.originalPrice)} ₫</span></p>
+              <p><span style={{ color: "red", fontSize: "18px" }}>{currency(item.price)} ₫</span> <span style={{ color: "gray", paddingLeft: "10px",textDecoration:'line-through' }}>{currency(item.originalPrice)} ₫</span></p>
               <SoLuong>
                 <p style={{ margin: "auto 0" }}>Chọn số lượng:</p>
                 <div style={{ margin: "auto 0", display: "flex" }}>

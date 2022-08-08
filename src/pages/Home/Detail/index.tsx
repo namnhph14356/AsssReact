@@ -95,7 +95,7 @@ const DetailProduct = () => {
           <Product>
             <a href=""><img src={dataTable.image} alt="" width={350} /></a>
             <div>
-              <p ><span style={{ color: "red", fontSize: "24px", fontWeight: "600" }}>{currency(Number(dataTable?.saleOffPrice))} đ </span><span style={{ color: "gray", paddingLeft: "10px" }}>{currency(Number(dataTable?.originalPrice))} đ</span></p>
+              <p ><span style={{ color: "red", fontSize: "24px", fontWeight: "600" }}>{currency(Number(dataTable?.saleOffPrice))} đ </span><span style={{ color: "gray", paddingLeft: "10px",textDecoration:'line-through' }}>{currency(Number(dataTable?.originalPrice))} đ</span></p>
               <p> Mô tả ngắn: {dataTable?.feature}</p>
               {/* <form action=""> */}
               {/* <input type="number" min={0} defaultValue={"1"} placeholder='Số sản phẩm' /> */}
@@ -136,7 +136,7 @@ const DetailProduct = () => {
                     <Link to={`/detail/${item.id}`} className="name" style={{ marginTop: "10px", color: "black" }}>{item.name}</Link>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                       <p style={{ color: "red" }}>{currency(item.saleOffPrice)} ₫</p>
-                      <p style={{ color: "gray", fontSize: "13px" }}>{currency(item.originalPrice)} ₫</p>
+                      <p style={{ color: "gray", fontSize: "13px", textDecoration:'line-through' }}>{currency(item.originalPrice)} ₫</p>
                     </div>
                     <Desc >
                       {/* <p >{item.description}</p> */}
