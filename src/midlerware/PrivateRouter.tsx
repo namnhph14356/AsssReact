@@ -12,8 +12,7 @@ const PrivateRoute = (props: PrivateRouteProps) => {
         return <Navigate to="/"/>
     }else if (isUser.role !== "0"){
         return <Navigate to="/"/>
-
-    } 
+    }
     
   return props.children
 }

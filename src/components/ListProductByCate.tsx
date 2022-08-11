@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { currency } from '../helpers/money'
-import { StarOutlined, StarTwoTone, MailOutlined } from '@ant-design/icons';
-import { useQuery } from 'react-query'
+import { StarOutlined, StarTwoTone, MailOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { getProducCate } from '../api/product'
 import { getCateId, listCate } from '../api/category'
 
@@ -21,8 +20,7 @@ const ListProductByCate = () => {
             setCate(data)
         }
         getCate(id)
-    },[])
-    console.log(cate);
+    },[id])
     
     useEffect(() => {
         const listcategory = async () => {
@@ -31,7 +29,6 @@ const ListProductByCate = () => {
             setCategory(data)
         }
         listcategory();
-        
 
     }, [])
     console.log(product);
@@ -49,7 +46,7 @@ const ListProductByCate = () => {
                 {category?.map((item: any, index: any) =>
                 
                     <Link to={`/categories/${item.id}`}>
-                        <Menu.Item key={item.id} icon={<MailOutlined />}>
+                        <Menu.Item key={item.id} icon={<CaretRightOutlined />}>
                             {item.name}
                         </Menu.Item>
                     </Link>

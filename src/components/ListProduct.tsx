@@ -17,7 +17,7 @@ const ListProduct = (props: Props) => {
 
     return (
         <div  >
-            <Title>ĐIỆN THOẠI NỔI BẬT NHẤT</Title>
+            <Title>Tất cả sản phẩm</Title>
             <List
                 grid={{
                     gutter: 16,

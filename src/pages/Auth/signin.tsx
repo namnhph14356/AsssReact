@@ -66,7 +66,7 @@ const SigninPage: React.FC = () => {
                         <Input type="password" {...register("password", { required: true, minLength: 5 })} />
                         <Error>{errors.password?.message} </Error>
                     </div>
-                    <Btn>Đăng kí</Btn>
+                    <Btn>Đăng nhập</Btn>
                 </Col>
 
                 <Col2 >

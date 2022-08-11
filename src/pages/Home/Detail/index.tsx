@@ -205,7 +205,7 @@ const Btn = styled.button`
     border-radius: 10px;
     :hover{
         /* border: 1px solid green; */
-        background-color: orange;
+        background-color: #A52A2A;
         cursor: pointer;
         transition:all .1s linear;
 
