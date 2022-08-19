@@ -5,7 +5,6 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import { getAll } from '../../../api/product';
 import { addCate, listCate, removeCate } from '../../../api/category';
 import { listorder, removeOrder } from '../../../api/order';

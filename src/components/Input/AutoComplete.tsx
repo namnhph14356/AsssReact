@@ -33,7 +33,7 @@ const AutoComplete = () => {
         setKeyword(e.target.value)
 
         const results = product.filter((item: any) => {
-            return e.target.value !== "" && item.name.toLowerCase().startsWith(keyword.toLowerCase());
+            return e.target.value !== "" && item.name.toLowerCase().includes(keyword.toLowerCase());
         });
         setKetqua(results);
 

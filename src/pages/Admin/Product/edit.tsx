@@ -4,7 +4,6 @@ import { Typography, Col, Row, Button, Checkbox, Form, Input, InputNumber, Selec
 import { useNavigate, useParams } from "react-router-dom";
 import { editProduct, getProductId } from '../../../api/product';
 import UploadImage from '../../../components/product/UploadImage';
-import { useQuery } from 'react-query';
 import { listCate } from '../../../api/category';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -16,43 +15,43 @@ const { TextArea } = Input
 const { Option } = Select;
 
 const EditProduct = () => {
-  const [image, setUploadedImage] = React.useState('')
-  const [category, setCategory] = useState([])
+	const [image, setUploadedImage] = React.useState('')
+	const [category, setCategory] = useState([])
 	const navigate = useNavigate()
 
-  const { id } = useParams();
-  const [form] = Form.useForm();
+	const { id } = useParams();
+	const [form] = Form.useForm();
 
 	const onHandleAdd = (image: any) => {
 		// console.log(image);
 		setUploadedImage(image.image)
 
 	}
-  
-  useEffect((() => {
-    const imgPreview = document.getElementById("imgPreview");
-    const imgPost = document.getElementById("file-upload");
 
-    if (id) {
-      const getCate = async (id: any) => {
-          const { data } = await getProductId(id);
-          console.log(data.image);
-          form.setFieldsValue(data)
-          // onreset(payload)
-        
-      }
-      getCate(id);
-  }
-  }),[])
-  useEffect(() => {
-    const listcategory = async () => {
-        const { data } = await listCate();
-        console.log(data); 
+	useEffect((() => {
+		const imgPreview = document.getElementById("imgPreview");
+		const imgPost = document.getElementById("file-upload");
 
-        setCategory(data)
-    }
-    listcategory();
-}, [])
+		if (id) {
+			const getProductID = async (id: any) => {
+				const { data } = await getProductId(id);
+				console.log(data.image);
+				form.setFieldsValue(data)
+				// onreset(payload)
+
+			}
+			getProductID(id);
+		}
+	}), [])
+	useEffect(() => {
+		const listcategory = async () => {
+			const { data } = await listCate();
+			console.log(data);
+
+			setCategory(data)
+		}
+		listcategory();
+	}, [])
 	const onFinish = async (values: any) => {
 		console.log('Success:', values);
 		console.log(image);
@@ -62,16 +61,14 @@ const EditProduct = () => {
 
 			if (Number(values.saleOffPrice) > Number(values.originalPrice)) {
 				message.error("Giá giảm không được > giá cũ")
-				
-
 
 			} else if (!image) {
 				message.error("Bạn chưa chọn ảnh")
-			} else{
+			} else {
 				await editProduct({ ...values, image, id })
 				// console.log(data);
 				message.success("Cập nhật thành công");
-        navigate("/admin")
+				navigate("/admin")
 			}
 
 			// navigate(-1)
@@ -93,15 +90,15 @@ const EditProduct = () => {
 			</Breadcrumb>
 			<Row gutter={16}>
 				<Col span={10}>
-				
-            <UploadImage  onAdd={onHandleAdd} />
-          
+
+					<UploadImage onAdd={onHandleAdd} />
+
 					{/* <UploadTest/> */}
 				</Col>
 				<Col span={14}>
 					<Typography.Title level={5}>Thông tin sản phẩm</Typography.Title>
 					<Form
-            			form={form}
+						form={form}
 						// name="product"
 						initialValues={{}}
 						onFinish={onFinish}
@@ -149,7 +146,7 @@ const EditProduct = () => {
 									rules={[{ required: true }]}
 								>
 									<Select style={{ width: '100%' }} size="large">
-										{category.map((item:any) => (
+										{category.map((item: any) => (
 											<Option value={item.id}>{item.name}</Option>
 										))}
 									</Select>
@@ -179,7 +176,7 @@ const EditProduct = () => {
 							label="Mô tả sản phẩm"
 							rules={[{ required: true, message: 'Mô tả sản phẩm' }]}
 						>
-							<ReactQuill theme="snow" style={{backgroundColor: 'white'}} />
+							<ReactQuill theme="snow" style={{ backgroundColor: 'white' }} />
 						</Form.Item>
 
 						<Form.Item>

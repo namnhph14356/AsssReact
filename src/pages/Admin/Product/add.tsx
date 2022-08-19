@@ -19,7 +19,6 @@ const AddProductPage = () => {
 	const onUpImage = (image: any) => {
 		// console.log(image);
 		setUploadedImage(image.image)
-
 	}
 
 	useEffect(() => {
@@ -41,7 +40,6 @@ const AddProductPage = () => {
 			}
 			else {
 				await createProduct({ ...values, image })
-
 				message.success("Tạo mới thành công");
 				navigate("/admin")
 			}
