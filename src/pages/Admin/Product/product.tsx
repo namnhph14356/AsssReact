@@ -53,7 +53,7 @@ const ProductAdminPage = () => {
                     image: item.image,
                     name: item.name,
                     originalPrice: item.originalPrice,
-                    saleOffPrice: item.saleOffPrice
+                    saleOffPrice: item.saleOffPrice 
                 }
             }))
         }

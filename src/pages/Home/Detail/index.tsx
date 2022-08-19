@@ -27,7 +27,6 @@ const DetailProduct = () => {
       const { data } = await getProductId(id);
       dispatch(getProductIdCateDetail(Number(data.categoriesId)))
       setProductId(data)
-
     }
     getProductById(id);
 

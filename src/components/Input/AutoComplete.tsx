@@ -52,7 +52,7 @@ const AutoComplete = () => {
             </AutuCompleteAnt> */}
             <Input
                 size="large"
-                placeholder=" Search here..."
+                placeholder="Tìm kiếm sản phẩm ...."
                 style={{ borderRadius: "10px" }}
                 value={keyword}
                 onChange={search}

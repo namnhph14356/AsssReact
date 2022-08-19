@@ -21,7 +21,6 @@ const fromSchema = yup.object().shape({
 		.string()
 		.required("Không được để trống")
 		.min(6, "Phải lớn hơn 6 kí tự"),
-
 });
 const validation = { resolver: yupResolver(fromSchema) };
 const SigninPage: React.FC = () => {
@@ -41,9 +40,7 @@ const SigninPage: React.FC = () => {
 				message.success("Đăng nhập thành công !");
 				localStorage.setItem("user", JSON.stringify(data))
 				navigate("/")
-
 			}
-
 		} catch (error) {
 			console.log(error);
 
