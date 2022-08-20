@@ -5,8 +5,6 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 
-import { getAll } from '../../../api/product';
-import { addCate, listCate, removeCate } from '../../../api/category';
 import { listorder, removeOrder } from '../../../api/order';
 import { OrderType } from '../../../type/order';
 import { Content } from 'antd/lib/layout/layout';
@@ -42,7 +40,6 @@ const ListOrder = () => {
         return setOrders(orders?.filter(item => item.id != id))
 
     }
-    const navigate = useNavigate()
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
