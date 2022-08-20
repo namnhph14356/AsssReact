@@ -55,8 +55,6 @@ const SignupPage: React.FC = () => {
     }
 
 
-
-
     return (
         <Container>
             <Form onSubmit={handleSubmit(onSubmit)}>
